@@ -67,3 +67,7 @@ data:
         group: 2. Clients
         url: "https://ameasalong.se"
         <<: *http-defaults
+      - name: Alpaka's Coffee
+        group: 2. Clients
+        url: "https://alpakascoffee.com"
+        <<: *http-defaults
