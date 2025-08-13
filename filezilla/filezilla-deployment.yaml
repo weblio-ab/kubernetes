@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filezilla
+  namespace: weblio
+  labels:
+    app.kubernetes.io/name: filezilla
+    app.kubernetes.io/component: file-manager
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: filezilla
+      app.kubernetes.io/component: file-manager
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: filezilla
+        app.kubernetes.io/component: file-manager
+        app.kubernetes.io/managed-by: kubectl
+    spec:
+      containers:
+        - name: filezilla
+          image: linuxserver/filezilla:3.68.1
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          env:
+            - name: TITLE
+              value: FileZilla
+            - name: NO_DECOR
+              value: "true"
