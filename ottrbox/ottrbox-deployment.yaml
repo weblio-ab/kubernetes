@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ottrbox
+  namespace: weblio
+  labels:
+    app.kubernetes.io/name: ottrbox
+    app.kubernetes.io/component: file-management
+    app.kubernetes.io/managed-by: argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ottrbox
+      app.kubernetes.io/component: file-management
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ottrbox
+        app.kubernetes.io/component: file-management
+        app.kubernetes.io/managed-by: argocd
+    spec:
+      containers:
+        - name: ottrbox
+          image: ghcr.io/aottr/ottrbox:v1.14
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - mountPath: /opt/app/backend/data
+              name: data
+            - mountPath: /opt/app/frontend/public/img
+              subPath: images
+              name: data
+      volumes:
+        - name: data
+          nfs:
+            path: /export/Kubernetes/weblio/ottrbox
+            server: 192.168.86.107
