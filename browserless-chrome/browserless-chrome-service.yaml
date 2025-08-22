@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: browserless-chrome
+  namespace: weblio
+  labels:
+    app.kubernetes.io/name: browserless-chrome
+    app.kubernetes.io/component: programming
+    app.kubernetes.io/managed-by: argocd
+spec:
+  selector:
+    app.kubernetes.io/name: browserless-chrome
+    app.kubernetes.io/component: programming
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000

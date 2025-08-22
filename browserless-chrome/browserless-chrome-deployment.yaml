@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: browserless-chrome
+  namespace: weblio
+  labels:
+    app.kubernetes.io/name: browserless-chrome
+    app.kubernetes.io/component: programming
+    app.kubernetes.io/managed-by: argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: browserless-chrome
+      app.kubernetes.io/component: programming
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: browserless-chrome
+        app.kubernetes.io/component: programming
+        app.kubernetes.io/managed-by: argocd
+    spec:
+      containers:
+        - name: browserless-chrome
+          image: ghcr.io/browserless/chrome:v2.34.1
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
